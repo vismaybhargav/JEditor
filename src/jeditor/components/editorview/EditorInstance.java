@@ -12,8 +12,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import jeditor.util.FileUtils;
+import jeditor.util.ResourceLoader;
 
 import java.io.File;
+import java.util.Objects;
 
 /*
     Class used to create a new instance of the editor inside a TabPane.
@@ -25,14 +27,18 @@ public class EditorInstance extends Tab {
     public File file;
     private boolean isTemp;
 
+    /*
     public ImageView lowFileImg = new ImageView(
-            getClass()
-                    .getClassLoader()
-                    .getResource("jeditor/resources/icons8-file-12.png")
+            Objects.requireNonNull(getClass()
+                            .getClassLoader()
+                            .getResource("jeditor/resources/icons8-file-12.png"))
                     .toString()
     );
+     */
 
-    public String jbFontPath = getClass().getClassLoader().getResource("jeditor/resources/JetBrainsMonoNL-Regular.ttf").toString();
+    public ImageView lowFileImg = new ImageView(ResourceLoader.loadResource("icons8-file-12.png", getClass()));
+
+    public String jbFontPath = ResourceLoader.loadResource("JetBrainsMono-Regular.ttf", getClass());
 
     public EditorInstance(File contents, boolean isTemp) {
         super(contents.getName());
@@ -92,12 +98,12 @@ public class EditorInstance extends Tab {
 
             double scroll = gutter.getScrollTop(); // get the scroll position of the gutter
 
-            String gutterText = "";
+            StringBuilder gutterText = new StringBuilder();
             for (int i = 1; i <= FileUtils.getLineCount(newValue); i++) {
-                gutterText += i + "\n";
+                gutterText.append(i).append("\n");
             }
 
-            gutter.setText(gutterText);
+            gutter.setText(gutterText.toString());
             gutter.setScrollTop(scroll); // reset scroll position
         });
     }
