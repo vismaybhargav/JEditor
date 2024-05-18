@@ -2,6 +2,7 @@ package jeditor.components.explorer;
 
 import javafx.scene.control.TreeItem;
 import javafx.scene.image.ImageView;
+import jeditor.util.ResourceLoader;
 
 import java.io.File;
 
@@ -11,55 +12,24 @@ import java.io.File;
 public class ExplorerItem extends TreeItem<String> {
     private File file;
     private final boolean isDirectory;
-
-    public ImageView folderImg = new ImageView(
-            getClass()
-                    .getClassLoader()
-                    .getResource("resources/icons8-folder-24.png")
-                    .toString()
-    );
-
-    public ImageView openFolderImg = new ImageView(
-            getClass()
-                    .getClassLoader()
-                    .getResource("resources/icons8-opened-folder-24.png")
-                    .toString()
-    );
-
-    public ImageView zipFileImg = new ImageView(
-            getClass()
-                    .getClassLoader()
-                    .getResource("resources/icons8-archive-folder-24.png")
-                    .toString()
-    );
-
-    public ImageView picImg = new ImageView(
-            getClass()
-                    .getClassLoader()
-                    .getResource("resources/icons8-picture-24.png")
-                    .toString()
-    );
-
-
-    public ImageView fileImg = new ImageView(
-            getClass()
-                    .getClassLoader()
-                    .getResource("resources/icons8-file-24.png")
-                    .toString()
-    );
+    private static final ImageView FOLDER_IMG = new ImageView(ResourceLoader.loadResource("icons8-folder-24.png", ExplorerItem.class));
+    private static final ImageView OPEN_FOLDER_IMG = new ImageView(ResourceLoader.loadResource("icons8-opened-folder-24.png", ExplorerItem.class));
+    private static final ImageView ZIP_FILE_IMG = new ImageView(ResourceLoader.loadResource("icons8-archive-folder-24.png", ExplorerItem.class));
+    private static final ImageView PIC_IMG = new ImageView(ResourceLoader.loadResource("icons8-picture-24.png", ExplorerItem.class));
+    private static final ImageView FILE_IMG = new ImageView(ResourceLoader.loadResource("icons8-file-24.png", ExplorerItem.class));
 
     public ExplorerItem(File file) {
         super(file.getName());
         isDirectory = file.isDirectory();
 
         if(isDirectory) {
-            setGraphic(folderImg);
+            setGraphic(FOLDER_IMG);
         } else if(file.getName().endsWith(".zip")) {
-            setGraphic(zipFileImg);
+            setGraphic(ZIP_FILE_IMG);
         } else if(file.getName().endsWith(".png") || file.getName().endsWith(".jpg")) {
-            setGraphic(picImg);
+            setGraphic(PIC_IMG);
         } else {
-            setGraphic(fileImg);
+            setGraphic(FILE_IMG);
 
         }
 
@@ -80,7 +50,7 @@ public class ExplorerItem extends TreeItem<String> {
 
     public void updateExpandedGraphic() {
         setGraphic(isExpanded()
-                ? openFolderImg
-                : folderImg);
+                ? OPEN_FOLDER_IMG
+                : FOLDER_IMG);
     }
 }

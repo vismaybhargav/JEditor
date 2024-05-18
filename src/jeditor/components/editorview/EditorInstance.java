@@ -15,24 +15,14 @@ import jeditor.util.FileUtils;
 import jeditor.util.ResourceLoader;
 
 import java.io.File;
-/*
-    Class used to create a new instance of the editor inside a TabPane.
- */
+
+/* Class used to create a new instance of the editor inside a TabPane. */
 public class EditorInstance extends Tab {
     private final String ID;
     private TextArea editorPane;
     private TextArea gutter;
     public File file;
     private boolean isTemp;
-
-    /*
-    public ImageView lowFileImg = new ImageView(
-            Objects.requireNonNull(getClass()
-                            .getClassLoader()
-                            .getResource("jeditor/resources/icons8-file-12.png"))
-                    .toString()
-    );
-     */
 
     public ImageView lowFileImg = new ImageView(ResourceLoader.loadResource("icons8-file-12.png", getClass()));
 
