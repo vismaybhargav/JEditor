@@ -15,8 +15,6 @@ import jeditor.util.FileUtils;
 import jeditor.util.ResourceLoader;
 
 import java.io.File;
-import java.util.Objects;
-
 /*
     Class used to create a new instance of the editor inside a TabPane.
  */
@@ -38,7 +36,7 @@ public class EditorInstance extends Tab {
 
     public ImageView lowFileImg = new ImageView(ResourceLoader.loadResource("icons8-file-12.png", getClass()));
 
-    public String jbFontPath = ResourceLoader.loadResource("JetBrainsMono-Regular.ttf", getClass());
+    public String jbFontPath = ResourceLoader.loadResource("JetBrainsMonoNL-Regular.ttf", getClass());
 
     public EditorInstance(File contents, boolean isTemp) {
         super(contents.getName());
