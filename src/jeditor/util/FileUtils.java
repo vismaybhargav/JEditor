@@ -1,6 +1,7 @@
 package jeditor.util;
 
 import javafx.scene.control.Alert;
+import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,18 +11,18 @@ import java.util.Scanner;
 
 public class FileUtils {
     public static String readTextAsLines(File file) {
-        String text = "";
+        StringBuilder text = new StringBuilder();
         try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
-                text += scanner.nextLine() + "\n";
+                text.append(scanner.nextLine()).append("\n");
             }
             scanner.close();
         } catch (FileNotFoundException e) {
             System.out.println("File not Found" + e.getMessage());
         }
 
-        return text;
+        return text.toString();
     }
 
     public static int getLineCount(File file) {
@@ -29,7 +30,7 @@ public class FileUtils {
         int count = 0;
         try {
             Scanner scanner = new Scanner(file);
-            while(scanner.hasNextLine()) {
+            while (scanner.hasNextLine()) {
                 scanner.nextLine();
                 count++;
             }
@@ -46,7 +47,7 @@ public class FileUtils {
     }
 
     public static void saveFile(File file, String textToSave) {
-        try(FileWriter fileWriter = new FileWriter(file)) {
+        try (FileWriter fileWriter = new FileWriter(file)) {
             fileWriter.write(textToSave);
             showAlert("Saved Successfully", "File saved successfully");
         } catch (IOException e) {
