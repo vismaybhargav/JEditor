@@ -1,7 +1,6 @@
 package jeditor.util;
 
 import javafx.scene.control.Alert;
-import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
