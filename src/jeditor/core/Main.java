@@ -7,7 +7,6 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import jeditor.components.ButtonBar;
 import jeditor.components.TopMenu;
-import jeditor.components.explorer.FileExplorer;
 
 public class Main extends Application {
     public static void main(String[] args) {
@@ -22,7 +21,7 @@ public class Main extends Application {
         root.setTop(new TopMenu());
 
         HBox sideBar = new HBox();
-        sideBar.getChildren().addAll(new ButtonBar(), new FileExplorer());
+        sideBar.getChildren().addAll(new ButtonBar(), ComponentStorage.getExplorer());
         root.setLeft(sideBar);
 
         root.setCenter(ComponentStorage.getTabbedEditorPane());
