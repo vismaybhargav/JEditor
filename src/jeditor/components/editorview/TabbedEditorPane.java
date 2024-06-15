@@ -1,7 +1,7 @@
 package jeditor.components.editorview;
 
 import javafx.scene.control.TabPane;
-import jeditor.core.Data;
+import jeditor.core.Model;
 
 public class TabbedEditorPane extends TabPane {
     public TabbedEditorPane() {
@@ -9,12 +9,12 @@ public class TabbedEditorPane extends TabPane {
     }
 
     public void addEditorInstance(EditorInstance editorInstance) {
-        Data.openEditorInstances.add(editorInstance);
+        Model.openEditorInstances.add(editorInstance);
         getTabs().add(editorInstance);
     }
 
     public void removeEditorInstance(EditorInstance editorInstance) {
-        Data.openEditorInstances.remove(editorInstance);
+        Model.openEditorInstances.remove(editorInstance);
         getTabs().remove(editorInstance);
     }
 }
