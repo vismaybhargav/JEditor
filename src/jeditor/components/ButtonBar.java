@@ -5,7 +5,8 @@ import javafx.scene.layout.VBox;
 
 
 public class ButtonBar extends VBox {
-    public ButtonBar() {
+    public static final ButtonBar INSTANCE = new ButtonBar();
+    private ButtonBar() {
         super();
 
         Button workspace = new Button("W");

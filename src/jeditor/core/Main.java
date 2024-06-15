@@ -5,8 +5,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import jeditor.components.ButtonBar;
 import jeditor.components.TopMenu;
+import jeditor.components.editorview.TabbedEditorPane;
+import jeditor.components.explorer.FileExplorer;
 
 public class Main extends Application {
     public static void main(String[] args) {
@@ -18,13 +19,13 @@ public class Main extends Application {
         initConfigs(primaryStage);
         BorderPane root = new BorderPane();
 
-        root.setTop(new TopMenu());
+        root.setTop(TopMenu.INSTANCE);
 
         HBox sideBar = new HBox();
-        sideBar.getChildren().addAll(new ButtonBar(), ComponentStorage.getExplorer());
+        sideBar.getChildren().addAll(TopMenu.INSTANCE, FileExplorer.INSTANCE);
         root.setLeft(sideBar);
 
-        root.setCenter(ComponentStorage.getTabbedEditorPane());
+        root.setCenter(TabbedEditorPane.INSTANCE);
 
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

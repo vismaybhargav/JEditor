@@ -4,7 +4,9 @@ import javafx.scene.control.TabPane;
 import jeditor.core.Model;
 
 public class TabbedEditorPane extends TabPane {
-    public TabbedEditorPane() {
+    public static final TabbedEditorPane INSTANCE = new TabbedEditorPane();
+
+    private TabbedEditorPane() {
         super();
     }
 
@@ -16,5 +18,9 @@ public class TabbedEditorPane extends TabPane {
     public void removeEditorInstance(EditorInstance editorInstance) {
         Model.openEditorInstances.remove(editorInstance);
         getTabs().remove(editorInstance);
+    }
+
+    public void selectEditorInstance(EditorInstance editorInstance) {
+        getSelectionModel().select(editorInstance);
     }
 }
