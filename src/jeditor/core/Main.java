@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import jeditor.components.ButtonBar;
 import jeditor.components.TopMenu;
 import jeditor.components.editorview.TabbedEditorPane;
 import jeditor.components.explorer.FileExplorer;
@@ -22,7 +23,7 @@ public class Main extends Application {
         root.setTop(TopMenu.INSTANCE);
 
         HBox sideBar = new HBox();
-        sideBar.getChildren().addAll(TopMenu.INSTANCE, FileExplorer.INSTANCE);
+        sideBar.getChildren().addAll(ButtonBar.INSTANCE, FileExplorer.INSTANCE);
         root.setLeft(sideBar);
 
         root.setCenter(TabbedEditorPane.INSTANCE);
