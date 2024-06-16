@@ -5,7 +5,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import jeditor.components.editorview.EditorInstance;
+import jeditor.components.editorview.TextEditor;
 import jeditor.components.editorview.TabbedEditorPane;
 import jeditor.components.explorer.ExplorerItem;
 import jeditor.components.explorer.FileExplorer;
@@ -26,10 +26,10 @@ public class TopMenu extends MenuBar {
         MenuItem saveFile = new MenuItem("Save");
 
         MenuItem openFile = new MenuItem("Open");
-        openFile.setOnAction(e -> openFileControl());
+        openFile.setOnAction(_ -> openFileControl());
 
         MenuItem openFolder = new MenuItem("Open Folder");
-        openFolder.setOnAction(e -> openFolderControl());
+        openFolder.setOnAction(_ -> openFolderControl());
 
         fileMenu.getItems().addAll(newFile, saveFile, openFile, openFolder);
     }
@@ -45,11 +45,11 @@ public class TopMenu extends MenuBar {
             // checking for if the directory has been expanded
             root.setExpanded(true);
             root.updateExpandedGraphic();
-            root.expandedProperty().addListener(e -> root.updateExpandedGraphic());
+            root.expandedProperty().addListener(_ -> root.updateExpandedGraphic());
 
             FileExplorer.INSTANCE.setRoot(root);
         } catch (IOException e) {
-            System.out.println("error building file tree" + e.getMessage());
+            System.out.println(STR."error building file tree\{e.getMessage()}");
         }
     }
 
@@ -58,6 +58,6 @@ public class TopMenu extends MenuBar {
         fileChooser.setTitle("Open File");
         File requestedFile = fileChooser.showOpenDialog(null);
         if (requestedFile == null) return;
-        TabbedEditorPane.INSTANCE.addEditorInstance(new EditorInstance(requestedFile, false));
+        TabbedEditorPane.INSTANCE.addEditorInstance(new TextEditor(requestedFile, false));
     }
 }

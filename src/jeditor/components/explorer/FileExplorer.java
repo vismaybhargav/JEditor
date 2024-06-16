@@ -1,8 +1,7 @@
 package jeditor.components.explorer;
 
 import javafx.scene.control.TreeView;
-import jeditor.components.editorview.EditorInstance;
-import jeditor.components.editorview.TabbedEditorPane;
+import jeditor.components.editorview.*;
 import jeditor.core.Model;
 
 import java.io.File;
@@ -22,9 +21,17 @@ public class FileExplorer extends TreeView<String> {
 
             if(selectedItem == null || selectedItem.isDirectory()) return; // Only allow non-null files
 
-            EditorInstance editorInstance = new EditorInstance(selectedItem.getFile(), false);
+            File selectedFile = selectedItem.getFile();
 
-            for(EditorInstance instance : Model.openEditorInstances) {
+            AbstractFileEditor editorInstance;
+            if(selectedFile.getName().endsWith(".png") || selectedFile.getName().endsWith(".jpeg")) {
+                editorInstance = new ImageViewer(selectedFile);
+            } else {
+                editorInstance = new TextEditor(selectedItem.getFile(), false);
+            }
+
+
+            for(AbstractFileEditor instance : Model.openEditorInstances) {
                 if(editorInstance.equals(instance)) {
                     TabbedEditorPane.INSTANCE.selectEditorInstance(instance);
                     return;

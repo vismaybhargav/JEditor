@@ -1,10 +1,7 @@
 package jeditor.components.editorview;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -17,61 +14,18 @@ import jeditor.util.ResourceLoader;
 import java.io.File;
 
 /* Class used to create a new instance of the editor inside a TabPane. */
-public class EditorInstance extends Tab {
-    private final String ID;
+public class TextEditor extends AbstractFileEditor {
     private TextArea editorPane;
     private TextArea gutter;
-    public File file;
     private boolean isTemp;
 
     public ImageView lowFileImg = new ImageView(ResourceLoader.loadResource("icons8-file-12.png", getClass()));
 
     public String jbFontPath = ResourceLoader.loadResource("JetBrainsMonoNL-Regular.ttf", getClass());
 
-    public EditorInstance(File contents, boolean isTemp) {
-        super(contents.getName());
-        ID = contents.getName();
-        file = contents;
+    public TextEditor(File contents, boolean isTemp) {
+        super(contents);
         this.isTemp = isTemp;
-
-        initialize(contents);
-        setOnClosed(new EditorClosedHandler(this));
-    }
-
-    private void initialize(File contents) {
-        setGraphic(lowFileImg);
-
-        HBox root = new HBox();
-        root.setPadding(new Insets(10, 10, 10, 10));
-
-        // actual text area
-        editorPane = new TextArea();
-        HBox.setHgrow(editorPane, Priority.ALWAYS);
-        VBox.setVgrow(editorPane, Priority.ALWAYS);
-
-        // editor styling
-        editorPane.setText(FileUtils.readTextAsLines(contents));
-        editorPane.setFont(Font.loadFont(jbFontPath, 15));
-        editorPane.setStyle("-fx-control-inner-background:rgb(43,43,44); -fx-text-fill:rgb(221,227,209)");
-
-        initEditorPaneChangeListener();
-        setupGutter();
-
-        // add the gutter line numbers for current file
-        for(int i = 1; i <= FileUtils.getLineCount(contents); i++){
-            gutter.appendText(i + "\n");
-        }
-
-        // sync the scrolls of the gutter and editorPane to line up the line numbers
-        gutter.setScrollTop(0);
-        gutter.scrollTopProperty().bindBidirectional(editorPane.scrollTopProperty());
-
-        // add to root
-        HBox.setHgrow(editorPane, Priority.ALWAYS);
-        root.getChildren().addAll(gutter, editorPane);
-
-        // add to textbox
-        setContent(root);
     }
 
     private void initEditorPaneChangeListener() {
@@ -107,16 +61,8 @@ public class EditorInstance extends Tab {
         gutter.setStyle("-fx-control-inner-background:rgb(43,43,44); -fx-text-fill:rgb(182,179,165)");
     }
 
-    public String getID() {
-        return ID;
-    }
-
     public TextArea getEditorPane() {
         return editorPane;
-    }
-
-    public boolean equals(EditorInstance other) {
-        return file.equals(other.file);
     }
 
     public void setIsTemp(boolean isTemp) {
@@ -127,16 +73,40 @@ public class EditorInstance extends Tab {
         return isTemp;
     }
 
-    // Handles what we do once the user closes an editorInstance
-    private class EditorClosedHandler implements EventHandler<Event> {
-        EditorInstance instance;
+    @Override
+    protected void initializeContent() {
+        setGraphic(lowFileImg);
 
-        public EditorClosedHandler(EditorInstance instance) {
-            this.instance = instance;
+        HBox root = new HBox();
+        root.setPadding(new Insets(10, 10, 10, 10));
+
+        // actual text area
+        editorPane = new TextArea();
+        HBox.setHgrow(editorPane, Priority.ALWAYS);
+        VBox.setVgrow(editorPane, Priority.ALWAYS);
+
+        // editor styling
+        editorPane.setText(FileUtils.readTextAsLines(getFile()));
+        editorPane.setFont(Font.loadFont(jbFontPath, 15));
+        editorPane.setStyle("-fx-control-inner-background:rgb(43,43,44); -fx-text-fill:rgb(221,227,209)");
+
+        initEditorPaneChangeListener();
+        setupGutter();
+
+        // add the gutter line numbers for current file
+        for(int i = 1; i <= FileUtils.getLineCount(getFile()); i++){
+            gutter.appendText(i + "\n");
         }
 
-        @Override
-        public void handle(Event event) {
-        }
+        // sync the scrolls of the gutter and editorPane to line up the line numbers
+        gutter.setScrollTop(0);
+        gutter.scrollTopProperty().bindBidirectional(editorPane.scrollTopProperty());
+
+        // add to root
+        HBox.setHgrow(editorPane, Priority.ALWAYS);
+        root.getChildren().addAll(gutter, editorPane);
+
+        // add to textbox
+        setContent(root);
     }
 }
