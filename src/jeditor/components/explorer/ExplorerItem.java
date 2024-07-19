@@ -1,8 +1,9 @@
 package jeditor.components.explorer;
 
 import javafx.scene.control.TreeItem;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import jeditor.util.FileUtils;
+import jeditor.util.ImageUtil;
 import jeditor.util.ResourceLoader;
 
 import java.io.File;
@@ -13,24 +14,20 @@ import java.io.File;
 public class ExplorerItem extends TreeItem<String> {
     private File file;
     private final boolean isDirectory;
-    private static final Image FOLDER_IMG = new Image(ResourceLoader.loadResource("icons8-folder-24.png", ExplorerItem.class));
-    private static final Image OPEN_FOLDER_IMG = new Image(ResourceLoader.loadResource("icons8-opened-folder-24.png", ExplorerItem.class));
-    private static final Image ZIP_FILE_IMG = new Image(ResourceLoader.loadResource("icons8-archive-folder-24.png", ExplorerItem.class));
-    private static final Image PIC_IMG = new Image(ResourceLoader.loadResource("icons8-picture-24.png", ExplorerItem.class));
-    private static final Image FILE_IMG = new Image(ResourceLoader.loadResource("icons8-file-24.png", ExplorerItem.class));
+
 
     public ExplorerItem(File file) {
         super(file.getName());
         isDirectory = file.isDirectory();
 
         if(isDirectory) {
-            setGraphic(new ImageView(FOLDER_IMG));
+            setGraphic(new ImageView(ImageUtil.FOLDER_IMG));
         } else if(file.getName().endsWith(".zip")) {
-            setGraphic(new ImageView(ZIP_FILE_IMG));
+            setGraphic(new ImageView(ImageUtil.ZIP_FILE_IMG));
         } else if(file.getName().endsWith(".png") || file.getName().endsWith(".jpg")) {
-            setGraphic(new ImageView(PIC_IMG));
+            setGraphic(new ImageView(ImageUtil.PIC_IMG));
         } else {
-            setGraphic(new ImageView(FILE_IMG));
+            setGraphic(new ImageView(ImageUtil.FILE_IMG));
         }
 
         this.file = file;
@@ -50,7 +47,7 @@ public class ExplorerItem extends TreeItem<String> {
 
     public void updateExpandedGraphic() {
         setGraphic(isExpanded()
-                ? new ImageView(OPEN_FOLDER_IMG)
-                : new ImageView(FOLDER_IMG));
+                ? new ImageView(ImageUtil.OPEN_FOLDER_IMG)
+                : new ImageView(ImageUtil.FOLDER_IMG));
     }
 }
