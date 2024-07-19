@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class FileUtils {
+public final class FileUtils {
     public static String readTextAsLines(File file) {
         StringBuilder text = new StringBuilder();
         try {
@@ -18,7 +18,7 @@ public class FileUtils {
             }
             scanner.close();
         } catch (FileNotFoundException e) {
-            System.out.println("File not Found" + e.getMessage());
+            System.out.println(STR."File not Found\{e.getMessage()}");
         }
 
         return text.toString();
@@ -50,7 +50,7 @@ public class FileUtils {
             fileWriter.write(textToSave);
             showAlert("Saved Successfully", "File saved successfully");
         } catch (IOException e) {
-            System.out.println("Unintended error occured: " + e.getMessage());
+            System.out.println(STR."Unintended error occured: \{e.getMessage()}");
         }
     }
 

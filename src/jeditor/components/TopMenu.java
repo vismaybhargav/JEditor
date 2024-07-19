@@ -13,7 +13,7 @@ import jeditor.components.explorer.FileExplorer;
 import java.io.File;
 import java.io.IOException;
 
-public class TopMenu extends MenuBar {
+public final class TopMenu extends MenuBar {
     public static final TopMenu INSTANCE = new TopMenu();
 
     private TopMenu() {
@@ -37,6 +37,8 @@ public class TopMenu extends MenuBar {
     private void openFolderControl() {
         DirectoryChooser dc = new DirectoryChooser();
         File selectedDirectory = dc.showDialog(null);
+
+        if(selectedDirectory == null) throw new RuntimeException("Error Null File");
 
         try {
             // build the file tree

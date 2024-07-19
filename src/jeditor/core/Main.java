@@ -2,15 +2,17 @@ package jeditor.core;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import jeditor.components.ButtonBar;
 import jeditor.components.TopMenu;
 import jeditor.components.editorview.TabbedEditorPane;
 import jeditor.components.explorer.FileExplorer;
 
-public class Main extends Application {
+public final class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
@@ -24,9 +26,12 @@ public class Main extends Application {
 
         HBox sideBar = new HBox();
         sideBar.getChildren().addAll(ButtonBar.INSTANCE, FileExplorer.INSTANCE);
-        root.setLeft(sideBar);
+        HBox.setHgrow(FileExplorer.INSTANCE, Priority.ALWAYS);
 
-        root.setCenter(TabbedEditorPane.INSTANCE);
+        SplitPane componentPane = new SplitPane();
+        componentPane.getItems().addAll(sideBar, TabbedEditorPane.INSTANCE);
+
+        root.setCenter(componentPane);
 
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
