@@ -23,7 +23,7 @@ public class FileExplorer extends TreeView<String> {
 
             File selectedFile = selectedItem.getFile();
 
-            AbstractFileEditor editorInstance;
+            AbstractFileView editorInstance;
             if(selectedFile.getName().endsWith(".png") || selectedFile.getName().endsWith(".jpeg")) {
                 editorInstance = new ImageViewer(selectedFile);
             } else {
@@ -31,7 +31,7 @@ public class FileExplorer extends TreeView<String> {
             }
 
 
-            for(AbstractFileEditor instance : Model.openEditorInstances) {
+            for(AbstractFileView instance : Model.openEditorInstances) {
                 if(editorInstance.equals(instance)) {
                     TabbedEditorPane.INSTANCE.selectEditorInstance(instance);
                     return;

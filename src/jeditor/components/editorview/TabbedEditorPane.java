@@ -10,17 +10,17 @@ public class TabbedEditorPane extends TabPane {
         super();
     }
 
-    public void addEditorInstance(AbstractFileEditor fileEditor) {
+    public void addEditorInstance(AbstractFileView fileEditor) {
         Model.openEditorInstances.add(fileEditor);
         getTabs().add(fileEditor);
     }
 
-    public void removeEditorInstance(AbstractFileEditor fileEditor) {
+    public void removeEditorInstance(AbstractFileView fileEditor) {
         Model.openEditorInstances.remove(fileEditor);
         getTabs().remove(fileEditor);
     }
 
-    public void selectEditorInstance(AbstractFileEditor fileEditor) {
+    public void selectEditorInstance(AbstractFileView fileEditor) {
         getSelectionModel().select(fileEditor);
     }
 }

@@ -1,15 +1,17 @@
 package jeditor.components.editorview;
 
 import javafx.scene.control.Tab;
+import jeditor.core.Model;
 
 import java.io.File;
 
-public abstract class AbstractFileEditor extends Tab {
+public abstract class AbstractFileView extends Tab {
     private File file;
 
-    public AbstractFileEditor(File file) {
+    public AbstractFileView(File file) {
         super(file.getName());
         this.file = file;
+        setOnClosed(_ -> Model.openEditorInstances.remove(this));
     }
 
     protected abstract void initializeContent();
@@ -24,7 +26,7 @@ public abstract class AbstractFileEditor extends Tab {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof AbstractFileEditor afe)
+        if(obj instanceof AbstractFileView afe)
             return file.equals(afe.getFile());
         return false;
     }

@@ -14,7 +14,7 @@ import jeditor.util.ResourceLoader;
 import java.io.File;
 
 /* Class used to create a new instance of the editor inside a TabPane. */
-public class TextEditor extends AbstractFileEditor {
+public class TextEditor extends AbstractFileView {
     private TextArea editorPane;
     private TextArea gutter;
     private boolean isTemp;
@@ -26,23 +26,24 @@ public class TextEditor extends AbstractFileEditor {
     public TextEditor(File contents, boolean isTemp) {
         super(contents);
         this.isTemp = isTemp;
+        initializeContent();
     }
 
     private void initEditorPaneChangeListener() {
-        editorPane.textProperty().addListener((observable, oldValue, newValue) -> {
+        editorPane.textProperty().addListener((_, _, newValue) -> {
             /*
             This is a way to get the scroll position of the editorPane to not jitter when typing
-            We get the scroll position of the gutter (binded to the editorPane) before changing the gutter text
+            We get the scroll position of the gutter (bound to the editorPane) before changing the gutter text
             Then we change the gutter text, and then after reset the scroll pos back to normal
 
-            This is a side-effect of using .appendText that scrolls down the editor all the way.
+            This is a side effect of using .appendText that scrolls down the editor all the way.
             */
 
             double scroll = gutter.getScrollTop(); // get the scroll position of the gutter
 
             StringBuilder gutterText = new StringBuilder();
             for (int i = 1; i <= FileUtils.getLineCount(newValue); i++) {
-                gutterText.append(i).append("\n");
+                gutterText.append(STR."\{i}\n");
             }
 
             gutter.setText(gutterText.toString());
@@ -95,7 +96,7 @@ public class TextEditor extends AbstractFileEditor {
 
         // add the gutter line numbers for current file
         for(int i = 1; i <= FileUtils.getLineCount(getFile()); i++){
-            gutter.appendText(i + "\n");
+            gutter.appendText(STR."\{i}\n");
         }
 
         // sync the scrolls of the gutter and editorPane to line up the line numbers
